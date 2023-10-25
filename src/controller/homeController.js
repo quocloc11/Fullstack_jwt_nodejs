@@ -13,7 +13,7 @@ const handleCreateNewUser=(req,res)=>{
     let username=req.body.username
 
     userService.createNewUser(email,password,username)
-    res.redirect("/user") // duong link de ko sang trang moi
+    return res.redirect("/user") // duong link de ko sang trang moi
 
 }
 
@@ -21,8 +21,29 @@ const handleDeleteUser =async (req,res)=>{
     console.log('check id',req.params.id)
 
     await userService.deleteUser(req.params.id)
-    res.redirect("/user") // duong link de ko sang trang moi
+    return res.redirect("/user") // duong link de ko sang trang moi
 }
+const getUpdateUserPage=async (req,res)=>{
+    let id =req.params.id
+    let user = await userService.getUserById(id)
+    let userData={}
+    if(user && user.length > 0){
+        userData=user[0]
+    }
+    return res.render('user-update.ejs',{userData})
+}
+
+const handleUpdateUser =async (req,res)=>{
+    let email=req.body.email;
+    let username=req.body.username;
+    let id=req.body.id;
+
+    await userService.updateUserInfor(email,username,id)
+    console.log('vheck ',req.body)
+    return  res.redirect("/user") // duong link de ko sang trang moi
+}
+
 module.exports= {
-    handleHelloword,handleUserPage,handleCreateNewUser,handleDeleteUser
+    handleHelloword,handleUserPage,handleCreateNewUser,handleDeleteUser,
+    getUpdateUserPage,handleUpdateUser
 }
