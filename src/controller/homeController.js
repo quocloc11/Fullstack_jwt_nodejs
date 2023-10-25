@@ -18,7 +18,6 @@ const handleCreateNewUser=(req,res)=>{
 }
 
 const handleDeleteUser =async (req,res)=>{
-    console.log('check id',req.params.id)
 
     await userService.deleteUser(req.params.id)
     return res.redirect("/user") // duong link de ko sang trang moi
@@ -39,7 +38,6 @@ const handleUpdateUser =async (req,res)=>{
     let id=req.body.id;
 
     await userService.updateUserInfor(email,username,id)
-    console.log('vheck ',req.body)
     return  res.redirect("/user") // duong link de ko sang trang moi
 }
 
